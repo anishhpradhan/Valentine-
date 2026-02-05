@@ -1,0 +1,98 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aruu & Anii 💖</title>
+<style>
+*{box-sizing:border-box;font-family:'Poppins','Comic Sans MS',cursive}
+body{margin:0;min-height:100vh;background:linear-gradient(135deg,#ff9a9e,#fad0c4);display:flex;align-items:center;justify-content:center;overflow:hidden}
+.page{display:none;background:#fff;width:92%;max-width:420px;padding:28px;border-radius:26px;text-align:center;box-shadow:0 20px 40px rgba(0,0,0,.2);animation:fade .8s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+h1{color:#ff4d6d}
+p{color:#555;line-height:1.6}
+button{background:#ff4d6d;color:#fff;border:none;padding:12px 26px;border-radius:999px;font-size:16px;margin-top:16px;cursor:pointer}
+button:hover{background:#e63950}
+.animals{display:flex;justify-content:space-around;margin-bottom:10px}
+.animal{width:70px;height:70px;border-radius:50%;position:relative;animation:bounce 2s infinite}
+.bear{background:#c89b7b}.bunny{background:#f7c1d9}
+.eye{width:6px;height:6px;background:#000;border-radius:50%;position:absolute;top:26px}
+.eye.l{left:22px}.eye.r{right:22px}
+.mouth{width:18px;height:8px;border-bottom:3px solid #000;border-radius:0 0 20px 20px;position:absolute;bottom:20px;left:26px}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.heart{font-size:50px;animation:beat 1s infinite}
+@keyframes beat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.kiss{font-size:42px;animation:kiss 1.4s infinite}
+@keyframes kiss{0%,100%{transform:scale(1)}50%{transform:scale(1.3)}}
+.hug{font-size:46px;animation:hug 1.2s infinite}
+@keyframes hug{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.float{position:absolute;bottom:-20px;font-size:22px;animation:float 6s linear infinite;opacity:.7}
+@keyframes float{from{transform:translateY(0)}to{transform:translateY(-110vh);opacity:0}}
+</style>
+</head>
+<body><!-- PAGE 1 --><div class="page active" id="p1">
+  <div class="animals">
+    <div class="animal bear"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div>
+    <div class="animal bunny"><div class="eye l"></div><div class="eye r"></div><div class="mouth"></div></div>
+  </div>
+  <h1>Hi Aruu 💕</h1>
+  <p>Even miles apart, my heart finds its way to you every single day.</p>
+  <div class="heart">❤️</div>
+  <button onclick="nextPage(2)">Open my letter 💌</button>
+</div><!-- PAGE 2 LETTER --><div class="page" id="p2">
+  <h1>My Love Letter 💖</h1>
+  <p id="letter"></p>
+  <button onclick="nextPage(3)">Continue 💗</button>
+</div><!-- PAGE 3 QUESTION --><div class="page" id="p3">
+  <h1>Aruu…</h1>
+  <p>You are my <b>Habibi</b> (my love), my <b>Hayati</b> (my life), and my <b>Roohi</b> (my soul).</p>
+  <p>With every heartbeat, I choose you.</p>
+  <p><b>Will you be my Ahliya? 💍</b></p>
+  <button onclick="yesClicked()">Yes, always 💖</button>
+</div><!-- PAGE 4 ENGAGED --><div class="page" id="p4">
+  <h1>💍 ENGAGED 💍</h1>
+  <div class="kiss">😘💋</div>
+  <div class="hug">🤗💞</div>
+  <p>Aruu & Anii<br>Forever begins now.</p>
+</div><script>
+const pages=[p1,p2,p3,p4];
+function nextPage(n){pages.forEach(p=>p.classList.remove('active'));pages[n-1].classList.add('active');}
+
+const letterText =
+"Dear Aruu,\n\n"+
+"You are my Habibi, the love my heart searched for.\n\n"+
+"You are my Hayati, the life that gives meaning to my days.\n\n"+
+"You are my Roohi, the soul that completes mine.\n\n"+
+"No distance can weaken what we feel, because my love for you only grows stronger.\n\n"+
+"Forever yours,\nAnii 💖";
+
+let i=0;
+function typeLetter(){
+  if(i<letterText.length){
+    document.getElementById('letter').innerHTML += letterText.charAt(i)==='\n'?'<br>':letterText.charAt(i);
+    i++;
+    setTimeout(typeLetter,45);
+  }
+}
+
+// start typing when page 2 opens
+const observer = new MutationObserver(()=>{
+  if(p2.classList.contains('active') && document.getElementById('letter').innerHTML===''){
+    typeLetter();
+  }
+});
+observer.observe(p2,{attributes:true});
+
+function yesClicked(){
+  nextPage(4);
+  setInterval(()=>{
+    const f=document.createElement('div');
+    f.className='float';
+    f.innerText=Math.random()>0.5?'💍':'💖';
+    f.style.left=Math.random()*100+'vw';
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),6000);
+  },400);
+}
+</script></body>
+</html>
